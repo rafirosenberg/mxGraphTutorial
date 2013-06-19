@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+<!-- set base path -->
+<script type='text/javascript'>
+    mxBasePath = '{{STATIC_URL}}js/src';
+</script>
+<!--get the mxGraph library-->
+<script type="text/javascript" src='{{STATIC_URL}}js/src/js/mxClient.js'></script>
+<!--create the mxGraph program-->
+<script type="text/javascript">
+    function main(container)
+    {
+    //check supported
+        if(!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Is Not Supported!', 200, null);
+        }
+    //create graph
+        else
+        {
+            var graph = new mxGraph(container);
+    //HierarchicalLayout
+        var layout = new mxHierarchicalLayout(graph);    
+    //Update graph
+        graph.getModel().beginUpdate();
+        try
+        {
+            //deal with xml
+            var doc = mxUtils.parseXml( {{ data }});
+            var decoder = new mxCodec(doc);
+            var node = doc.documentElement;
+            decoder.decode(node, graph.getModel());
+            
+            //execute layout
+            var parent = graph.getDefaultParent();
+            layout.execute(parent);
+        }
+    finally
+        {
+            graph.getModel().endUpdate();
+        }
+    
+        }
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+
+<!-- write the html -->
+    <!-- onload function -->
+<script>
+    window.onload = function (){main(document.getElementById('graphContainer'))};
+</script>
+    <!--create the containing div-->
+<div id = "graphContainer" style="width:960px;height:500px;">
+</div>
+
+{% endblock %}

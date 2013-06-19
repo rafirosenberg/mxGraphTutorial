@@ -1,0 +1,16 @@
+'<mxGraphModel>'+
+'<root>'+
+'<mxCell id="0"/>'+
+    '<mxCell id="1" parent="0"/>'+
+     {% for object in data.contributions %}
+     '<mxCell id= "person_{{object.pk}}" value="{{object.name}}" vertex="1" parent="1">'+
+          '<mxGeometry x="0" y="0" width="80" height="70" as="geometry"/>'+
+     '</mxCell>'+
+     '<mxCell id= "edge_{{object.pk}}" value="added" edge="1" parent="1" source="contributor_{{ data.contributor.pk }}" target="person_{{object.pk}}">'+
+     '<mxGeometry relative="1" as="geometry"/></mxCell>'+
+     {% endfor %}
+     '<mxCell id= "contributor_{{ data.contributor.pk }}" value="{{ data.contributor.username }}" vertex="1" parent="1">'+
+          '<mxGeometry x="0" y="0" width="80" height="40" as="geometry"/>'+
+     '</mxCell>'+ 
+'</root>'+
+'</mxGraphModel>'
