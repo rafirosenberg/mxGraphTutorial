@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example</title>
+    
+<!-- Set a basepath for the library if not in the same directory -->
+<script type="text/javascript">
+    mxBasePath = 'src';
+</script>
+<!-- Laod and intialize the library -->
+<script type="text/javascript" src="../../javascript/src/js/mxClient.js"></script>
+<!-- Create the code -->
+<script type="text/javascript">
+   function main(container,data)
+    {
+
+        
+        if (!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
+        }
+        else
+        {
+            var graph = new mxGraph(container);
+            
+            var layout = new mxFastOrganicLayout(graph);
+
+                                    
+            new mxRubberband(graph);
+            
+            var parent = graph.getDefaultParent();
+            
+            
+            
+            graph.getModel().beginUpdate();
+            try
+            {
+                read(graph, 'example.xml');
+                
+                //execute layout
+                var parent = graph.getDefaultParent();
+                
+                layout.useInputOrigin = true;
+                //Specifies if the top left corner of the input cells should be the origin of the layout result.
+                layout.resetEdges = true;
+                //Specifies if all edge points of traversed edges should be removed.
+                layout.disableEdgeStyle = true;
+                //Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are modified by the result.
+                layout.forceConstant = 50;
+                //The force constant by which the attractive forces are divided and the replusive forces are multiple by the square of.
+                //layout.forceConstantSquared
+                //Cache of <forceConstant>layout.2 for performance.
+                layout.minDistanceLimit = 2;
+                //Minimal distance limit.
+                //layout.minDistanceLimitSquared
+                //Cached version of minDistanceLimit squared.
+                layout.initialTemp = 20;
+                //Start value of temperature.
+                //layout.temperature
+                //Temperature to limit displacement at later stages of /ayout.
+                layout.maxIterations = 20;
+                //Total number of iterations to run the layout though.
+                
+                //layout.iteration
+                //Current iteration count.
+                //layout.vertexArray
+                //An array of all vertices to be laid out.
+                //layout.dispX
+                //An array of locally stored X co-ordinate displacements for the vertices.
+                //layout.dispY
+                //An array of locally stored Y co-ordinate displacements for the vertices.
+                //layout.cellLocation
+                //An array of locally stored co-ordinate positions for the vertices.
+                //layout.radius
+                //The approximate radius of each cell, nodes only.
+                //layout.radiusSquared
+                //The approximate radius squared of each cell, nodes only.
+                //layout.isMoveable
+                //Array of booleans representing the movable states of the vertices.
+                //layout.neighbours
+                //Local copy of cell neighbours.
+                //layout.indices
+                //Hashtable from cells to local indices.
+                //layout.allowedToRun
+                //Boolean flag that specifies if the layout is allowed to run.           
+                
+                layout.execute(parent);
+                console.log("current Temp: "+layout.temperature)
+                console.log("min Distance Limit Squared: "+layout.minDistanceLimitSquared);
+                console.log("force Constant Squared: "+layout.forceConstantSquared);
+                console.log("current Iteration: "+layout.iteration);
+                console.log("first vertex: "+layout.vertexArray[0]);
+                console.log("dispX: "+layout.dispX);
+                console.log("dispY: "+layout.dispY);
+                console.log("radius: "+layout.radius);
+                console.log("radius squared: "+layout.radiusSquared);
+                console.log("is movable: "+layout.isMoveable);
+                console.log("neighbors: "+layout.neighbours);
+                console.log("indeces: "+layout.indices);
+                console.log("allowed To Run: "+layout.allowedToRun);
+                
+                
+            }
+            finally
+            {
+                graph.getModel().endUpdate();
+            }
+        }
+    };
+    function read(graph, filename)
+    {
+        var req = mxUtils.load(filename);
+        var root = req.getDocumentElement();
+        var dec = new mxCodec(root.ownerDocument);
+        
+        dec.decode(root, graph.getModel());
+    };
+    
+</script>
+</head>
+<!-- begin page here and it passes the container for the graph to the program on loading the page-->
+<body onload="main(document.getElementById('graphContainer'))">
+    <!--Create a container for the graph -->
+    <div id="graphContainer"></div>
+         
+</body>
+</html>

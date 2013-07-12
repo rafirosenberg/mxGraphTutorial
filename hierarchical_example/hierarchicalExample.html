@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Hello, World</title>
+    <title>Hierachical Example</title>
     
 <!-- Set a basepath for the library if not in the same directory -->
 <script type="text/javascript">
@@ -13,7 +13,9 @@
 <!-- Create the code -->
 <script type="text/javascript">
    function main(container,data)
-    {   
+    {
+
+        
         if (!mxClient.isBrowserSupported())
         {
             mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
@@ -22,10 +24,29 @@
         {
             var graph = new mxGraph(container);
             
+                                    
             new mxRubberband(graph);
             
             var parent = graph.getDefaultParent();
-            var layout = new mxHierarchicalLayout(graph);
+            
+            var layout = new mxCompactTreeLayout(graph);
+            
+            //layout.horizontal=false
+            //layout.invert = false
+            //layout.resizeParent
+            //layout.groupPadding = 500;
+            //layout.parentsChanged
+            //layout.moveTree
+            //layout.levelDistance = 20;
+            //layout.nodeDistance = 10;
+            //layout.resetEdges
+            //layout.prefHozEdgeSep =20;
+            //layout.prefVertEdgeOff =200;
+            //layout.minEdgeJetty = 200;
+            //layout.channelBuffer
+            //layout.edgeRouting = false;
+            //layout.sortEdges = true;
+            
             graph.getModel().beginUpdate();
             try
             {
@@ -34,29 +55,10 @@
                 //execute layout
                 var parent = graph.getDefaultParent();
                 
-                //all related to resize
-                layout.resizeParent = false;
-                layout.moveParent = false;	
-                layout.parentBorder = 0;
-                
-                //related to spacing
-                layout.intraCellSpacing = 20;	
-                layout.interRankCellSpacing = 50;	
-                layout.interHierarchySpacing = 10;
-                //only applicable if there are parallel edges
-                layout.parallelEdgeSpacing = 10;
-                
-                layout.orientation =  mxConstants.DIRECTION_WEST;
-                
-                layout.fineTuning = true;
-                layout.tightenToSource = true;
-                layout.disableEdgeStyle	= false;
-                
-                //layout.traverseAncestors =	
-                //layout.model =
-                //layout.edgesSet = 
                 
                 layout.execute(parent);
+
+                
             }
             finally
             {

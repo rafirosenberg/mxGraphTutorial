@@ -1,28 +1,20 @@
 #!/usr/bin/python
 
 import xml.etree.ElementTree as xml
+import random
 
-team = (("president", 1),
-("vice president 1", 2, 1),
-("vice president 2", 2, 2),
-("vice president 3", 2, 3),
-("vice president 4", 2, 4),
-("team 1 member", 3 , 1),
-("team 1 member" ,3 , 1),
-("team 1 member", 3 , 1),
-("team 1 member", 3 , 1),
-("team 2 member", 3 , 2), 
-("team 2 member", 3 , 2),
-("team 2 member", 3 , 2),
-("team 2 member", 3 , 2),
-("team 3 member", 3 , 3),
-("team 3 member", 3 , 3),
-("team 3 member", 3 , 3),
-("team 3 member", 3 , 3),
-("team 4 member", 3 , 4),
-("team 4 member", 3 , 4),
-("team 4 member", 3 , 4),
-("team 4 member", 3 , 4))
+team = [("president", 1)]
+vices = random.randint(4,7)
+v=0
+while v < vices:
+    v+=1
+    team.append(('vice president %s' % v, 2 , v) )
+    members = random.randint(2,10)
+    me=0
+    while me < members:
+        me+=1
+        team.append(('team member %s' % me , 3, v))
+print(team)
 
 model = xml.Element('mxGraphModel')
 root = xml.Element('root')
@@ -32,15 +24,14 @@ zero = xml.Element('mxCell',id='0')
 one = xml.Element('mxCell',id='1', parent='0')
 root.append(zero)
 root.append(one)
+
 for member in team:
     if member[1] == 1:
         newCell=xml.Element('mxCell', id=member[0]+'_vertex', value=member[0], vertex='1', parent='1')
         newMxGeometry=xml.Element('mxGeometry', x='0', y='0', width='80', height='70')
         newMxGeometry.set('as','geometry')
         newCell.append(newMxGeometry)
-        #for responsibility in team:
-        #    if responsibility[1] == member[1]+1:
-        #            
+        
     elif member[1] == 2:
         newCell=xml.Element('mxCell', id=member[0]+'_vertex', value=member[0], vertex='1', parent='1')
         newMxGeometry=xml.Element('mxGeometry', x='0', y='0', width='70', height='60')
@@ -71,6 +62,6 @@ for member in team:
     
 
     
-file = open("hierarchy.xml", 'w')
+file = open("example.xml", 'w')
 xml.ElementTree(model).write(file)
 file.close()
