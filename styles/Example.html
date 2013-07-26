@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example</title>
+    
+<!-- Set a basepath for the library if not in the same directory -->
+<script type="text/javascript">
+    mxBasePath = 'src';
+</script>
+<!-- Laod and intialize the library -->
+<script type="text/javascript" src="../../javascript/src/js/mxClient.js"></script>
+<!-- Create the code -->
+<script type="text/javascript">
+   function main(container,data)
+    {
+
+        
+        if (!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
+        }
+        else
+        {
+            var graph = new mxGraph(container);
+            
+            var layout = new mxHierarchicalLayout(graph);            
+            
+            var edge_style = graph.stylesheet.getDefaultEdgeStyle();
+              edge_style[mxConstants.STYLE_STROKEWIDTH] = 4;
+              
+              //edge_style[mxConstants.ARROW_SIZE] = 12;
+            var style = graph.stylesheet.getDefaultVertexStyle();
+              style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = 'white';
+              style[mxConstants.STYLE_STROKEWIDTH] = 4;
+              style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ACTOR;
+              //style[mxConstants.STYLE_OPACITY] = 50;
+              style[mxConstants.STYLE_FILLCOLOR]= 'green';
+              style[mxConstants.STYLE_FONTCOLOR]= 'red';
+              style[mxConstants.STYLE_FONTSIZE]= 20;
+              style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+              style[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_BOTTOM;
+            
+            
+                                    
+            new mxRubberband(graph);
+            
+            graph.getModel().beginUpdate();
+            try
+            {
+                read(graph, 'example.xml');
+                
+                var parent = graph.getDefaultParent();
+               
+                layout.execute(parent);
+                	
+                
+            }
+            finally
+            {
+                graph.getModel().endUpdate();
+            }
+        }
+    };
+    function read(graph, filename)
+    {
+        var req = mxUtils.load(filename);
+        var root = req.getDocumentElement();
+        var dec = new mxCodec(root.ownerDocument);
+        
+        dec.decode(root, graph.getModel());
+    };
+    
+</script>
+</head>
+<!-- begin page here and it passes the container for the graph to the program on loading the page-->
+<body onload="main(document.getElementById('graphContainer'))">
+    <!--Create a container for the graph -->
+    <div id="graphContainer"></div>
+         
+</body>
+</html>

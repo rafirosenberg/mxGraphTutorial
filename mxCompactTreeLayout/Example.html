@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example</title>
+    
+<!-- Set a basepath for the library if not in the same directory -->
+<script type="text/javascript">
+    mxBasePath = 'src';
+</script>
+<!-- Laod and intialize the library -->
+<script type="text/javascript" src="../../javascript/src/js/mxClient.js"></script>
+<!-- Create the code -->
+<script type="text/javascript">
+   function main(container,data)
+    {
+
+        
+        if (!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
+        }
+        else
+        {
+            var graph = new mxGraph(container);
+            
+            var layout = new mxCompactTreeLayout(graph);
+            var layout2 = new mxCompactTreeLayout(graph);
+            
+            
+            var style = graph.stylesheet.getDefaultVertexStyle();
+              style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
+              style[mxConstants.STYLE_OPACITY] = 50;
+              style[mxConstants.STYLE_FONTCOLOR]= '#774400';
+              graph.getStylesheet().putCellStyle('ROUNDED',style);
+                                    
+            new mxRubberband(graph);
+            
+            graph.getModel().beginUpdate();
+            try
+            {
+                read(graph, 'example.xml');
+                
+                var parent = graph.getDefaultParent();
+                
+                layout.horizontal = true;	//Specifies the orientation of the layout.
+                layout.invert = false;	        //Specifies if edge directions should be inverted.
+                layout.resizeParent = true;	//If the parents should be resized to match the width/height of the children.
+                layout.groupPadding = 10;	//Padding added to resized parents.
+                //layout.parentsChanged=	//A set of the parents that need updating based on children process as part of the layout.
+                layout.moveTree = false;	//Specifies if the tree should be moved to the top, left corner if it is inside a top-level layer.
+                layout.levelDistance = 10;	//Holds the levelDistance.
+                layout.nodeDistance = 20;	//Holds the nodeDistance.
+                layout.resetEdges = true;	//Specifies if all edge points of traversed edges should be removed.
+                layout.prefHozEdgeSep = 0;    //The preferred horizontal distance between edges exiting a vertex.
+                //layout.prefVertEdgeOff = 4;	//The preferred vertical offset between edges exiting a vertex.
+                //layout.minEdgeJetty= 8;	//The minimum distance for an edge jetty from a vertex.
+                //layout.channelBuffer= 4;	//The size of the vertical buffer in the center of inter-rank channels where edge control points should not be placed.
+                //layout.edgeRouting = true;	//Whether or not to apply the internal tree edge routing.
+                //layout.sortEdges = false;	//Specifies if edges should be sorted according to the order of their opposite terminal cell in the model.
+                
+                
+                layout.execute(parent);
+                
+                console.log('group padding: '+layout.groupPadding);	//Padding added to resized parents.
+                console.log('parents changed: ',layout.parentsChanged);	//A set of the parents that need updating based on children process as part of the layout.
+                
+                console.log('pref Hoz Edge Sep: '+layout.prefHozEdgeSep);	//The preferred horizontal distance between edges exiting a vertex.
+                console.log('pref Vert Edge Off:'+layout.prefVertEdgeOff);	//The preferred vertical offset between edges exiting a vertex.
+                console.log('min edge jetty: '+layout.minEdgeJetty);	//The minimum distance for an edge jetty from a vertex.
+                console.log('channel buffer: '+layout.channelBuffer);	//The size of the vertical buffer in the center of inter-rank channels where edge control points should not be placed.
+                console.log('edge routing: '+ layout.edgeRouting);	//Whether or not to apply the internal tree edge routing.
+                console.log('sort edges: '+layout.sortEdges);	
+                
+            }
+            finally
+            {
+                graph.getModel().endUpdate();
+            }
+        }
+    };
+    function read(graph, filename)
+    {
+        var req = mxUtils.load(filename);
+        var root = req.getDocumentElement();
+        var dec = new mxCodec(root.ownerDocument);
+        
+        dec.decode(root, graph.getModel());
+    };
+    
+</script>
+</head>
+<!-- begin page here and it passes the container for the graph to the program on loading the page-->
+<body onload="main(document.getElementById('graphContainer'))">
+    <!--Create a container for the graph -->
+    <div id="graphContainer"></div>
+         
+</body>
+</html>
