@@ -38,7 +38,13 @@ for member in team:
         newMxGeometry.set('as','geometry')
         newCell.append(newMxGeometry)
         newEdge=xml.Element('mxCell', id=member[0]+"_edge",
-                            value='', edge="1", parent="1", source='president_vertex', target=member[0]+'_vertex')
+                            value='1', edge="1", parent="1", source='president_vertex', target=member[0]+'_vertex')
+        newEdgeGeo=xml.Element('mxGeometry', relative='1')
+        newEdgeGeo.set('as','geometry')
+        newEdge.append(newEdgeGeo)
+        root.append(newEdge)
+        newEdge=xml.Element('mxCell', id=member[0]+"_edge2",
+        value='2', edge="1", parent="1", source='president_vertex', target=member[0]+'_vertex')
         newEdgeGeo=xml.Element('mxGeometry', relative='1')
         newEdgeGeo.set('as','geometry')
         newEdge.append(newEdgeGeo)
@@ -51,7 +57,14 @@ for member in team:
         newMxGeometry.set('as','geometry')
         newCell.append(newMxGeometry)
         newEdge=xml.Element('mxCell', id=member[0]+'-'+str(m)
-                            +'_edge', value='', edge="1", parent="1",
+                            +'_edge', value='1st', edge="1", parent="1",
+                            target=member[0]+'-'+str(m)+'_vertex', source='vice president '+str(member[2])+'_vertex')
+        newEdgeGeo=xml.Element('mxGeometry', relative='1')
+        newEdgeGeo.set('as','geometry')
+        newEdge.append(newEdgeGeo)
+        root.append(newEdge)
+        newEdge=xml.Element('mxCell', id=member[0]+'-'+str(m)
+                            +'_edge2', value='2nd', edge="1", parent="1",
                             target=member[0]+'-'+str(m)+'_vertex', source='vice president '+str(member[2])+'_vertex')
         newEdgeGeo=xml.Element('mxGeometry', relative='1')
         newEdgeGeo.set('as','geometry')

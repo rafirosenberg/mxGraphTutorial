@@ -25,14 +25,6 @@
             var graph = new mxGraph(container);
             
             var layout = new mxCompactTreeLayout(graph);
-            var layout2 = new mxCompactTreeLayout(graph);
-            
-            
-            var style = graph.stylesheet.getDefaultVertexStyle();
-              style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
-              style[mxConstants.STYLE_OPACITY] = 50;
-              style[mxConstants.STYLE_FONTCOLOR]= '#774400';
-              graph.getStylesheet().putCellStyle('ROUNDED',style);
                                     
             new mxRubberband(graph);
             
@@ -43,21 +35,21 @@
                 
                 var parent = graph.getDefaultParent();
                 
-                layout.horizontal = true;	//Specifies the orientation of the layout.
-                layout.invert = false;	        //Specifies if edge directions should be inverted.
-                layout.resizeParent = true;	//If the parents should be resized to match the width/height of the children.
-                layout.groupPadding = 10;	//Padding added to resized parents.
+                layout.horizontal = false;	//Specifies the orientation of the layout.
+                //layout.invert = false;	        //Specifies if edge directions should be inverted.
+                //layout.resizeParent = true;	//If the parents should be resized to match the width/height of the children.
+                //layout.groupPadding = ;	//Padding added to resized parents.
                 //layout.parentsChanged=	//A set of the parents that need updating based on children process as part of the layout.
-                layout.moveTree = false;	//Specifies if the tree should be moved to the top, left corner if it is inside a top-level layer.
-                layout.levelDistance = 10;	//Holds the levelDistance.
-                layout.nodeDistance = 20;	//Holds the nodeDistance.
+                //layout.moveTree = false;	//Specifies if the tree should be moved to the top, left corner if it is inside a top-level layer.
+                layout.levelDistance = 100;	//Holds the levelDistance.
+                layout.nodeDistance = 50;	//Holds the nodeDistance.
                 layout.resetEdges = true;	//Specifies if all edge points of traversed edges should be removed.
-                layout.prefHozEdgeSep = 0;    //The preferred horizontal distance between edges exiting a vertex.
-                //layout.prefVertEdgeOff = 4;	//The preferred vertical offset between edges exiting a vertex.
-                //layout.minEdgeJetty= 8;	//The minimum distance for an edge jetty from a vertex.
-                //layout.channelBuffer= 4;	//The size of the vertical buffer in the center of inter-rank channels where edge control points should not be placed.
-                //layout.edgeRouting = true;	//Whether or not to apply the internal tree edge routing.
-                //layout.sortEdges = false;	//Specifies if edges should be sorted according to the order of their opposite terminal cell in the model.
+                layout.prefHozEdgeSep = 25;    //The preferred horizontal distance between edges exiting a vertex.
+                layout.prefVertEdgeOff = 24;	//The preferred vertical offset between edges exiting a vertex.
+                layout.minEdgeJetty= 18;	//The minimum distance for an edge jetty from a vertex.
+                layout.channelBuffer= 4;	//The size of the vertical buffer in the center of inter-rank channels where edge control points should not be placed.
+                layout.edgeRouting = false;	//Whether or not to apply the internal tree edge routing.
+                layout.sortEdges = false;	//Specifies if edges should be sorted according to the order of their opposite terminal cell in the model.
                 
                 
                 layout.execute(parent);
