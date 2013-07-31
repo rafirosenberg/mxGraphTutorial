@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example</title>
+    
+<!-- Set a basepath for the library if not in the same directory -->
+<script type="text/javascript">
+    mxBasePath = 'src';
+</script>
+<!-- Laod and intialize the library -->
+<script type="text/javascript" src="../../javascript/src/js/mxClient.js"></script>
+<!-- Create the code -->
+<script type="text/javascript">
+   function main(container,data)
+    {
+
+        
+        if (!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
+        }
+        else
+        {
+            var graph = new mxGraph(container);
+            
+            var style = graph.getStylesheet().getDefaultVertexStyle();
+            style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
+            style[mxConstants.STYLE_FONTSIZE] = '30';
+            style[mxConstants.STYLE_FOLDABLE] = '1';
+            style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
+            style[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = mxConstants.ALIGN_BOTTOM;
+            style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+
+            
+            
+            
+                                    
+            new mxRubberband(graph);
+
+            
+            graph.getModel().beginUpdate();
+            try
+            {
+                read(graph, 'example.xml');
+                
+                var parent = graph.getDefaultParent();
+                
+                var layout = new mxStackLayout(graph);
+                layout.spacing = 10;
+                layout.x0= 160;
+                layout.border = 10;
+                layout.horizontal = false;
+                layout.resizeParent = false;
+                layout.execute(graph.getModel().getCell('breed-1'));
+                
+                var layout = new mxStackLayout(graph);
+                layout.border = 10;
+                layout.horizontal = false;
+                layout.resizeParent = false;
+                layout.execute(graph.getModel().getCell('breed-2'));
+               
+                var layout = new mxStackLayout(graph);
+                layout.border = 10;
+                layout.horizontal = false;
+                layout.resizeParent = false;
+                layout.execute(graph.getModel().getCell('breed-3'));
+                
+                              	
+            }
+            finally
+            {
+                graph.getModel().endUpdate();
+            }
+        }
+    };
+    function read(graph, filename)
+    {
+        var req = mxUtils.load(filename);
+        var root = req.getDocumentElement();
+        var dec = new mxCodec(root.ownerDocument);
+        
+        dec.decode(root, graph.getModel());
+    };
+    
+</script>
+</head>
+<!-- begin page here and it passes the container for the graph to the program on loading the page-->
+<body onload="main(document.getElementById('graphContainer'))">
+    <!--Create a container for the graph -->
+    <div id="graphContainer"></div>
+         
+</body>
+</html>
