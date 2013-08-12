@@ -1,0 +1,29 @@
+<mxGraphModel dx="800" dy="800" grid="1" guides="1" tooltips="1" connect="1" fold="1" page="1" pageScale="1" pageWidth="826" pageHeight="1169" style="default-style2">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="" style="whiteSpace=wrap" vertex="1" parent="1">
+      <mxGeometry x="110" y="140" width="120" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="3" value="" style="shape=parallelogram;whiteSpace=wrap" vertex="1" parent="1">
+      <mxGeometry x="150" y="80" width="120" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="4" value="" style="shape=trapezoid;whiteSpace=wrap" vertex="1" parent="1">
+      <mxGeometry x="60" y="70" width="120" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="5" value="Container" style="swimlane;whiteSpace=wrap" vertex="1" parent="1">
+      <mxGeometry x="310" y="40" width="470" height="220" as="geometry">
+        <mxRectangle x="310" y="40" width="70" height="23" as="alternateBounds"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="6" value="" style="ellipse;whiteSpace=wrap" vertex="1" parent="5">
+      <mxGeometry x="110" y="110" width="80" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="7" value="" style="ellipse;whiteSpace=wrap" vertex="1" parent="5">
+      <mxGeometry x="240" y="130" width="80" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="8" value="" style="ellipse;whiteSpace=wrap" vertex="1" parent="5">
+      <mxGeometry x="390" y="140" width="80" height="80" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

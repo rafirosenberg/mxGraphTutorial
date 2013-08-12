@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example</title>
+    
+<!-- Set a basepath for the library if not in the same directory -->
+<script type="text/javascript">
+    mxBasePath = 'src';
+</script>
+<!-- Laod and intialize the library -->
+<script type="text/javascript" src="../../javascript/src/js/mxClient.js"></script>
+<!-- Create the code -->
+<script type="text/javascript">
+   function main(container,data)
+    {        
+        if (!mxClient.isBrowserSupported())
+        {
+            mxUtils.error('Browser Not supported... Get a new computer fast!', 200, false);
+        }
+        else
+        {
+            var graph = new mxGraph(container);
+                    
+            new mxRubberband(graph);
+            
+            graph.getModel().beginUpdate();
+            try
+            {
+                read(graph, 'example.xml');
+		
+		graph.addListener(mxEvent.CLICK, function(sender, evt)
+            {
+                var cell = evt.getProperty('cell');
+                if (cell.id == '_back')
+		{
+		    graph.getModel().remove(cell);
+		    graph.exitGroup(cell.parent);
+		    
+		}
+                else if (cell != null)
+                {
+		    graph.enterGroup(cell);
+		    var img ='http://b.dryicons.com/images/icon_sets/handy_icons_set/png/64x64/up_arrow.png';
+		    graph.insertVertex(graph.getDefaultParent(), '_back', 'back', 0, 0, 40, 40,
+				       style = "shape=image;image="+img+";"
+				    + "perimeter=rectanglePerimeter;imageVerticalAlign=top;fontStyle=1;align=center;"
+				    + "verticalAlign=top;spacing=2;spacingTop=40;imageAlign=center;"   
+				    + "imageWidth=40;imageHeight=40;");
+                }
+            });
+
+
+            }
+            finally
+            {
+                graph.getModel().endUpdate();
+            }
+        }
+    };
+    function read(graph, filename)
+    {
+        var req = mxUtils.load(filename);
+        var root = req.getDocumentElement();
+        var dec = new mxCodec(root.ownerDocument);
+        
+        dec.decode(root, graph.getModel());
+    };
+    
+</script>
+</head>
+<!-- begin page here and it passes the container for the graph to the program on loading the page-->
+<body onload="main(document.getElementById('graphContainer'))">
+    <!--Create a container for the graph -->
+    <div id="graphContainer"></div>
+         
+</body>
+</html>
